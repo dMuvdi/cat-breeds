@@ -1,0 +1,47 @@
+name: cats_app
+description: "A new Flutter project."
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.7.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+  
+  # State Management
+  flutter_bloc: ^8.1.4
+  equatable: ^2.0.5
+  
+  # Navigation
+  go_router: ^14.2.7
+  
+  # Network
+  dio: ^5.4.3
+  
+  # UI
+  cached_network_image: ^3.3.1
+  shimmer: ^3.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
+
+  # assets:
+  #   - assets/images/
+
+  #   fonts:
+  #   - family: Poppins
+  #     fonts:
+  #       - asset: assets/fonts/Poppins-Regular.ttf
+  #       - asset: assets/fonts/Poppins-Bold.ttf
+  #         weight: 700
