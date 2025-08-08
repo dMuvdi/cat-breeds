@@ -26,6 +26,9 @@ dependencies:
   # UI
   cached_network_image: ^3.3.1
   shimmer: ^3.0.0
+  
+  # URL handling
+  url_launcher: ^6.1.14
 
 dev_dependencies:
   flutter_test:

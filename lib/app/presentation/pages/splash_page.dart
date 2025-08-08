@@ -42,7 +42,7 @@ class _SplashPageState extends State<SplashPage> {
             Icon(Icons.pets, size: 100, color: Colors.orange.shade800),
             const SizedBox(height: 24),
             Text(
-              'Cats App',
+              'CatBreeds',
               style: TextStyle(
                 fontSize: 32,
                 fontWeight: FontWeight.bold,

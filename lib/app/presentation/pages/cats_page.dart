@@ -40,7 +40,7 @@ class _CatsPageState extends State<CatsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Cats'),
+        title: const Text('CatBreeds'),
         backgroundColor: Colors.orange.shade100,
         foregroundColor: Colors.orange.shade800,
       ),
@@ -89,15 +89,9 @@ class _CatsPageState extends State<CatsPage> {
                     );
                   }
 
-                  return GridView.builder(
+                  return ListView.builder(
                     padding: const EdgeInsets.all(16.0),
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          childAspectRatio: 0.75,
-                          crossAxisSpacing: 16,
-                          mainAxisSpacing: 16,
-                        ),
+                    itemExtent: 400,
                     itemCount: state.filteredCats.length,
                     itemBuilder: (context, index) {
                       final cat = state.filteredCats[index];

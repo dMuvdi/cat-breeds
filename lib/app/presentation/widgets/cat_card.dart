@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import '../../../src/utils/formatters.dart';
 import '../../domain/entities/cat.dart';
 
 class CatCard extends StatelessWidget {
@@ -64,29 +65,74 @@ class CatCard extends StatelessWidget {
             Expanded(
               flex: 1,
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 15,
+                  vertical: 10,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      cat.name,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    if (cat.origin != null && cat.origin!.isNotEmpty)
-                      Text(
-                        cat.origin!,
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.grey.shade600,
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          cat.name,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
+                        if (cat.origin != null && cat.origin!.isNotEmpty)
+                          RichText(
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            text: TextSpan(
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.grey.shade600,
+                              ),
+                              children: [
+                                TextSpan(text: 'Origin: ${cat.origin!} '),
+                                if (cat.countryCode != null &&
+                                    cat.countryCode!.isNotEmpty)
+                                  WidgetSpan(
+                                    alignment: PlaceholderAlignment.middle,
+                                    child: Text(
+                                      countryCodeToEmoji(cat.countryCode!),
+                                      style: const TextStyle(fontSize: 18),
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          ),
+                        if (cat.intelligence != null)
+                          Text(
+                            'Intelligence: ${cat.intelligence.toString()}',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.grey.shade600,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                      ],
+                    ),
+                    ElevatedButton(
+                      onPressed: onTap,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.orange.shade100,
+                        foregroundColor: Colors.orange.shade800,
                       ),
+                      child: Text(
+                        'See more...',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.orange.shade800,
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),

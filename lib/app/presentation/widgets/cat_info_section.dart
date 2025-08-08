@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
+import 'package:url_launcher/url_launcher.dart';
+import '../../../src/utils/formatters.dart';
 
 class CatInfoSection extends StatelessWidget {
   final String title;
@@ -47,8 +50,14 @@ class CatInfoSection extends StatelessWidget {
 class CatInfoItem {
   final String label;
   final String value;
+  final String? countryCode;
+  final String? url;
 
-  const CatInfoItem(this.label, this.value);
+  const CatInfoItem(this.label, this.value, {this.countryCode, this.url});
+
+  const CatInfoItem.link(this.label, this.url)
+    : value = label,
+      countryCode = null;
 
   Widget build(BuildContext context) {
     return Container(
@@ -74,7 +83,104 @@ class CatInfoItem {
             ),
             const SizedBox(width: 16),
           ],
-          Expanded(child: Text(value, style: const TextStyle(fontSize: 16))),
+          Expanded(
+            child:
+                url != null
+                    ? InkWell(
+                      onTap: () async {
+                        try {
+                          final uri = Uri.parse(url!);
+                          bool result = false;
+
+                          try {
+                            if (kIsWeb) {
+                              result = await launchUrl(uri);
+                            } else {
+                              result = await launchUrl(
+                                uri,
+                                mode: LaunchMode.externalApplication,
+                              );
+                            }
+                          } catch (launchError) {
+                            // If the first attempt fails, try without mode
+                            try {
+                              result = await launchUrl(uri);
+                            } catch (e) {
+                              // If both attempts fail, show error
+                              if (context.mounted) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text('Error opening link: $e'),
+                                    backgroundColor: Colors.red,
+                                  ),
+                                );
+                              }
+                              return;
+                            }
+                          }
+
+                          if (!result && context.mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Could not open link'),
+                                backgroundColor: Colors.red,
+                              ),
+                            );
+                          }
+                        } catch (e) {
+                          // Show a snackbar if there's an error
+                          if (context.mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Error opening link: $e'),
+                                backgroundColor: Colors.red,
+                              ),
+                            );
+                          }
+                        }
+                      },
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              value,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                color: Colors.blue,
+                                decoration: TextDecoration.underline,
+                              ),
+                            ),
+                          ),
+                          const Icon(
+                            Icons.open_in_new,
+                            size: 16,
+                            color: Colors.blue,
+                          ),
+                        ],
+                      ),
+                    )
+                    : countryCode != null && countryCode!.isNotEmpty
+                    ? RichText(
+                      text: TextSpan(
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: Colors.black,
+                        ),
+                        children: [
+                          TextSpan(text: value),
+                          const TextSpan(text: ' '),
+                          WidgetSpan(
+                            alignment: PlaceholderAlignment.middle,
+                            child: Text(
+                              countryCodeToEmoji(countryCode!),
+                              style: const TextStyle(fontSize: 18),
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                    : Text(value, style: const TextStyle(fontSize: 16)),
+          ),
         ],
       ),
     );

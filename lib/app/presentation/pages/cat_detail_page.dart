@@ -100,7 +100,11 @@ class _CatDetailPageState extends State<CatDetailPage> {
                             title: 'Basic Information',
                             items: [
                               if (cat.origin != null && cat.origin!.isNotEmpty)
-                                CatInfoItem('Origin', cat.origin!),
+                                CatInfoItem(
+                                  'Origin',
+                                  cat.origin!,
+                                  countryCode: cat.countryCode,
+                                ),
                               if (cat.lifeSpan != null &&
                                   cat.lifeSpan!.isNotEmpty)
                                 CatInfoItem('Life Span', cat.lifeSpan!),
@@ -259,11 +263,17 @@ class _CatDetailPageState extends State<CatDetailPage> {
                               title: 'Links',
                               items: [
                                 if (cat.wikipediaUrl != null)
-                                  CatInfoItem('Wikipedia', cat.wikipediaUrl!),
+                                  CatInfoItem.link(
+                                    'Wikipedia',
+                                    cat.wikipediaUrl!,
+                                  ),
                                 if (cat.cfaUrl != null)
-                                  CatInfoItem('CFA', cat.cfaUrl!),
+                                  CatInfoItem.link('CFA', cat.cfaUrl!),
                                 if (cat.vetstreetUrl != null)
-                                  CatInfoItem('Vetstreet', cat.vetstreetUrl!),
+                                  CatInfoItem.link(
+                                    'Vetstreet',
+                                    cat.vetstreetUrl!,
+                                  ),
                               ],
                             ),
                           const SizedBox(height: 32),
