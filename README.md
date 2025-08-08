@@ -47,10 +47,14 @@ lib/
 │           ├── cat_info_section.dart
 │           └── search_box.dart
 ├── src/                           # Shared resources
+│   ├── core/
+│   │   └── dependency_injection.dart
 │   ├── router/
 │   │   └── app_router.dart
-│   └── services/
-│       └── api_service.dart
+│   ├── services/
+│   │   └── api_service.dart
+│   └── utils/
+│       └── formatters.dart
 └── main.dart
 ```
 
@@ -61,8 +65,10 @@ lib/
   - **Data Layer**: Handles data operations, API calls, and data models
   - **Presentation Layer**: Manages UI, state, and user interactions
 - **Src Layer**: Contains shared resources and utilities
+  - **Core**: Dependency injection and core configurations
   - **Router**: Navigation configuration
   - **Services**: Shared services like API client
+  - **Utils**: Utility functions and formatters
 
 ## Dependencies
 
